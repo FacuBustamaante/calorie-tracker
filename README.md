@@ -28,4 +28,4 @@ npm start
 
 ## Licencia
 
-Este proyecto está bajo la licencia MIT.
+Este proyecto de uso libre.
