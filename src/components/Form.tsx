@@ -55,17 +55,28 @@ function Form({ dispatch, state } : FormProps) {
     }
 
 
+    const isFood = activity.category === 1
+
     return (
-        <form 
-            className="space-y-5 bg-white p-10 rounded-lg"
+        <form
+            className="bg-white rounded-2xl shadow-lg p-8 space-y-6"
             onSubmit={handleSubmit}
         >
-            <div className="grid grid-cols-1 gap-3">
-                <label htmlFor="category" className="font-bold">Categoría</label>
-                <select 
+            <div className="flex items-center gap-3 pb-2 border-b border-slate-100">
+                <span className="text-2xl">{isFood ? '🍽️' : '🏃'}</span>
+                <h2 className="text-xl font-bold text-slate-800">
+                    {isFood ? 'Registrar Comida' : 'Registrar Ejercicio'}
+                </h2>
+            </div>
+
+            <div className="space-y-1.5">
+                <label htmlFor="category" className="text-xs font-bold text-slate-500 uppercase tracking-widest">
+                    Categoría
+                </label>
+                <select
                     id="category"
                     value={activity.category}
-                    className="border border-slate-300 p-2 rounded-lg w-full bg-white" 
+                    className="w-full border-2 border-slate-200 focus:border-emerald-400 focus:outline-none p-3 rounded-xl bg-white text-slate-700 font-medium transition-colors cursor-pointer"
                     onChange={handleChange}
                 >
                     {categories.map(category => (
@@ -76,32 +87,45 @@ function Form({ dispatch, state } : FormProps) {
                 </select>
             </div>
 
-            <div className="grid grid-cols-1 gap-3">
-                <label htmlFor="name" className="font-bold">Actividad</label>
-                <input 
-                    type="text" 
-                    id="name" 
-                    className="border border-slate-300 p-2 rounded-lg" 
-                    placeholder="Ej: Caminar, Jugo de naranja, Ensalada, Ejercicio, etc."
+            <div className="space-y-1.5">
+                <label htmlFor="name" className="text-xs font-bold text-slate-500 uppercase tracking-widest">
+                    Actividad
+                </label>
+                <input
+                    type="text"
+                    id="name"
+                    className="w-full border-2 border-slate-200 focus:border-emerald-400 focus:outline-none p-3 rounded-xl text-slate-700 font-medium transition-colors"
+                    placeholder={isFood ? 'Ej: Ensalada, Jugo de naranja...' : 'Ej: Correr 30 min, Ciclismo...'}
                     value={activity.name}
                     onChange={handleChange}
                 />
             </div>
-            <div className="grid grid-cols-1 gap-3">
-                <label htmlFor="category" className="font-bold">Calorías</label>
-                <input 
-                    type="number" 
-                    id="calories" 
-                    className="border border-slate-300 p-2 rounded-lg" 
+
+            <div className="space-y-1.5">
+                <label htmlFor="calories" className="text-xs font-bold text-slate-500 uppercase tracking-widest">
+                    Calorías
+                </label>
+                <input
+                    type="number"
+                    id="calories"
+                    className="w-full border-2 border-slate-200 focus:border-emerald-400 focus:outline-none p-3 rounded-xl text-slate-700 font-medium transition-colors"
                     placeholder="Ej: 300"
                     value={activity.calories}
                     onChange={handleChange}
                 />
             </div>
-            <input type="submit" value={activity.category === 1 ? 'Guardar comida' : 'Guardar ejercicio'}
-                className="bg-gray-800 rounded-lg disabled:opacity-10 hover:bg-gray-900 w-full p-2 font-bold uppercase text-white cursor-pointer"
+
+            <button
+                type="submit"
+                className={`w-full py-3.5 px-6 font-bold text-white rounded-xl transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer text-sm uppercase tracking-wide ${
+                    isFood
+                        ? 'bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700'
+                        : 'bg-orange-500 hover:bg-orange-600 active:bg-orange-700'
+                }`}
                 disabled={!isValidActivitiy()}
-            />
+            >
+                {isFood ? 'Guardar Comida' : 'Guardar Ejercicio'}
+            </button>
         </form>
     )
 }
